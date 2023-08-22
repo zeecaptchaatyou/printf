@@ -45,15 +45,6 @@ int _printf(const char *format, ...)
 					lenString++;
 				write(1, string, lenString);
 				printedChars += lenString; } }
-
 		format++; }
 	va_end(args_list);
 	return (printedChars); }
-
-int main(void)
-{
-	_printf("%%"\n);
-	_printf("%s\n", "Hello I am Vincent");
-	_printf("%c\n", 'k');
-	_printf("Vince\n");
-	return (0); }
