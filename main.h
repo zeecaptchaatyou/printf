@@ -9,7 +9,6 @@
 int _printf(const char *format, ...);
 
 /* Handing %d and %i */
-int printfInteger(const char *format, ...);
 int print_integer(int n);
 
 /* Handle Binary */
