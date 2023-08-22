@@ -7,7 +7,7 @@
 #include <string.h>
 
 int _printf(const char *format, ...);
-
+int printInt(int n);
 int binary(int num);
 
 int octal(int num);
