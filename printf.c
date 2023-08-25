@@ -1,44 +1,48 @@
 #include "main.h"
 
 /**
- * _printf - produces output according to a format
- * @format: a character string
- * Return: number of bytes written to standard output
+ * _printf - custom printf
+ * @format: variadic argument
+ * Return: number of characters printed to stdout
 */
 int _printf(const char *format, ...)
-{ size_t i, len, (*spec_ptr)(ssize_t, size_t), (*uspec_ptr)(size_t, size_t);
-size_t (*strspec_ptr)(char *, size_t);
-char c, *err_msg = "(null)";
-va_list ments;
-va_start(ments, format);
-if (format == NULL)
-{write(1, err_msg, _strlen(err_msg));
-return (0); }
-for (i = 0, len = 0; format[i]; i++)
-{c = format[i];
-
-if (c == '%')
 {
-++i, c = format[i];
-if (c == 'd' || c == 'i')
-{spec_ptr = i_spotify(c);
-if (spec_ptr != NULL)
-len = spec_ptr(va_arg(ments, int), len); }
-else if (sort(c) == 1)
-{uspec_ptr = ui_spotify(c);
-if (uspec_ptr != NULL)
-len = uspec_ptr(va_arg(ments, unsigned int), len); }
-else if (sort(c) == 2)
-{strspec_ptr = str_spotify(c);
-if (strspec_ptr != NULL)
-len = strspec_ptr(va_arg(ments, char *), len); }
-else if (sort(c) == 3)
-len = print_char(va_arg(ments, int), len);
-else if (c == '%')
-write(1, &c, 1), len += 1;
+va_list args;
+int count = 0, i, j, flags = 0, start, end;
+va_start(args, format);
+conversion_t conversion[] = {
+{'c', print_char},
+{'s', print_string},
+{'%', print_percent},
+{'d', print_int},
+{'i', print_int},
+{'b', print_binary},
+{'u', print_uint},
+{'o', print_octal},
+{'x', print_hex},
+{'X', print_HEX},
+{'S', print_S},
+{'p', print_pointer},
+{'R', print_rot13},
+{'r', print_reverse},
+{'\0', NULL}};
+
+for (i = 0; format && format[i]; i++)
+{
+if (format[i] == '%')
+{start = i + 1, end = start;
+while (format[end] && is_flag(format[end]))
+end++;
+
+flags = handle_flags(format, start, end);
+
+for (j = 0; conversion[j].format != '\0'; j++)
+{
+if (conversion[j].format == format[i + 1])
+{count += conversion[j].func(args, flags), i++;
+break; }}}
 else
-write(1, &c, 1); }
-else
-write(1, &c, 1), len += 2; }
-va_end(ments);
-return (len % 2 ?  (len + 1) / 2 : len / 2); }
+{write(1, &format[i], 1), count++; }}
+
+va_end(args);
+return (count); }

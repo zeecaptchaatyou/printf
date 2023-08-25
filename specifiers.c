@@ -1,111 +1,133 @@
 #include "main.h"
 
 /**
- * print_char - prints a single character to sdout
- * @c: character to be printed
- * @count: the argument count += number of chars printed to stdout
- * Return: count
+ * print_binary - converts to binary, formats specifically
+ * and prints to stdout
+ * @args: variable list
+ * @flags: format specifier
+ * Return: numer of characters writtent to stdout
 */
-size_t print_char(char c, size_t count)
+int print_binary(va_list args, int flags)
 {
-write(1, &c, 1), count += 1;
-return (count);
-}
+unsigned int num = va_arg(args, unsigned int);
+int count = 0, index = 0, i;
+char *buffer = malloc(32); /*Maximum 32-bit binary representation*/
 
-/**
- * print_string - prints a string to stdout
- * @s: string to be printed
- * @count: the argument count += number of chars printed to stdout
- * Return: count
-*/
-size_t print_string(char *s, size_t count)
-{
-size_t i = 0;
-char c;
-if (s == NULL)
-{
+if (buffer == NULL)
 return (0);
-}
-while (s[i])
+
+if (flags & FLAG_HASH)
+write(1, "0b", 2);
+
+if (num == 0)
 {
-c = s[i];
-write(1, &c, 1), i++, count += 1;
+write(1, "0", 1);
+return (1);
 }
+
+while (num > 0)
+{
+buffer[index++] = num % 2 + '0';
+num /= 2;
+}
+
+for (i = index - 1; i >= 0; i--)
+{
+write(1, &buffer[i], 1);
+count++;
+}
+
 return (count);
 }
 
 /**
- * print_decimal - prints decimal value of n to stdout
- * @n: number to be printed
- * @count: the argument count += number of chars printed to stdout
- * Return: count
+ * print_hex_char - won't even bother to explain
+ * @c: extreeeeeeemely useful here hun.
+ * Return: 2.
 */
-size_t print_decimal(ssize_t n, size_t count)
+int print_hex_char(char c)
 {
-int i = 0;
-char *str = _itoa(n, 10), c;
+char hexDigits[] = "0123456789ABCDEF";
+char buffer[3];
+buffer[0] = hexDigits[(c >> 4) & 0x0F];
+buffer[1] = hexDigits[c & 0x0F];
+buffer[2] = '\0';
+
+write(1, buffer, 2);
+return (2);
+}
+
+/**
+ * print_S - Almighty Mr Barbier wanted this so, here it is
+ * @args: variable list
+ * @flags: flag specifier
+ * Return: numer of characters writtent to stdout
+*/
+int print_S(va_list args, int flags)
+{
+char *str = va_arg(args, char*);
+int count = 0;
+
 if (str == NULL)
 {
-free(str);
-return (0);
+write(1, "(null)", 6);
+return (6);
 }
-for ( ; str[i]; i++, count++)
+/*
+ * thisis just some way to trick the compiler into not noticing
+ *flags is unused, remember this
+ */
+if (flags == 0)
+count += 1;
+for (int i = 0; str[i]; i++)
 {
-c = str[i];
-write(1, &c, 1);
+if (str[i] >= 32 && str[i] < 127)
+{
+write(1, &str[i], 1);
+count++;
 }
-free(str);
-return (count);
+else
+{
+write(1, "\\x", 2);
+count += 2;
+count += print_hex_char(str[i]);
+}
+}
+
+return (count - 1);/*remove the one added previously*/
 }
 
 /**
- * print_binary - prints binary value of n to stdout
- * @n: number to be printed
- * @count: the argument count += number of chars printed to stdout
- * Return: count
+ * print_char - rides a c(H)arrrrrr
+ * @args: variable list
+ * @flags: flag specifier
+ * Return: 1
 */
-size_t print_binary(size_t n, size_t count)
+int print_char(va_list args, int flags)
 {
-int i = 0;
-char *str, c;
-
-str = _u_itoa(n, 2);
-if (str == NULL)
-{
-free(str);
-return (0);
-}
-for ( ; str[i]; i++, count++)
-{
-c = str[i];
+char c = (char)va_arg(args, int);
 write(1, &c, 1);
-}
-free(str);
-return (count);
+if (flags == 0)
+return ((1 + 1) - 1);
+else
+return (1);
 }
 
 /**
- * print_octal - prints octal value of n to stdout
- * @n: number to be printed
- * @count: the argument count += number of chars printed to stdout
- * Return: count
+ * print_string - what do think it does? huh?
+ * @args: variable list
+ * @flags: flag specifier
+ * Return: numer of characters writtent to stdout
 */
-size_t print_octal(size_t n, size_t count)
+int print_string(va_list args, int flags)
 {
-int i = 0;
-char *str, c;
-
-str = _u_itoa(n, 8);
-if (str == NULL)
-{
-free(str);
-return (0);
-}
-for ( ; str[i]; i++, count++)
-{
-c = str[i];
-write(1, &c, 1);
-}
-free(str);
-return (count);
+char *str = va_arg(args, char*);
+int len = 0;
+if (flags == 0)
+len += 1;
+len -= 1;
+while (str[len])
+len++;
+write(1, str, len);
+return (len);
 }
