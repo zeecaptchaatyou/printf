@@ -9,7 +9,6 @@ int _printf(const char *format, ...)
 {
 va_list args;
 int count = 0, i, j, flags = 0, start, end;
-va_start(args, format);
 conversion_t conversion[] = {
 {'c', print_char},
 {'s', print_string},
@@ -26,7 +25,7 @@ conversion_t conversion[] = {
 {'R', print_rot13},
 {'r', print_reverse},
 {'\0', NULL}};
-
+va_start(args, format);
 for (i = 0; format && format[i]; i++)
 {
 if (format[i] == '%')

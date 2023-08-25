@@ -27,12 +27,13 @@ return ((flags + 1) - 1);
  */
 int print_reverse(va_list args, int flags)
 {
+int i;
 char *str = va_arg(args, char *);
 flags = 0;
 while (str[flags])
 flags++;
 
-for (int i = flags - 1; i >= 0; i--)
+for (i = flags - 1; i >= 0; i--)
 write(1, &str[i], 1);
 
 return (flags + 1);

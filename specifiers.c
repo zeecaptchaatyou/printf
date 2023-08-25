@@ -66,7 +66,7 @@ return (2);
 int print_S(va_list args, int flags)
 {
 char *str = va_arg(args, char*);
-int count = 0;
+int count = 0, i;
 
 if (str == NULL)
 {
@@ -79,7 +79,7 @@ return (6);
  */
 if (flags == 0)
 count += 1;
-for (int i = 0; str[i]; i++)
+for (i = 0; str[i]; i++)
 {
 if (str[i] >= 32 && str[i] < 127)
 {

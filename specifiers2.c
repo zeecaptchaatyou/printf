@@ -141,7 +141,7 @@ return (count);
 int print_hex(va_list args, int flags)
 {
 unsigned int num = va_arg(args, unsigned int);
-int count = 0, index = 0;
+int count = 0, index = 0, i = 0;
 char hexDigits[] = "0123456789abcdef";
 char *buffer = malloc(32); /*Maximum 32-bit hexadecimal representation*/
 
@@ -163,7 +163,7 @@ buffer[index++] = hexDigits[num % 16];
 num /= 16;
 }
 
-for (int i = index - 1; i >= 0; i--)
+for (i = index - 1; i >= 0; i--)
 {
 write(1, &buffer[i], 1);
 count++;
