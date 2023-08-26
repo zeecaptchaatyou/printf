@@ -18,10 +18,8 @@ for (i = 0; format && format[i]; i++)
 {
 if (format[i] == '%')
 {
-if (format[i] == '%' && (format[i + 1] == '\0' || (!is_flag(format[i +
-1]) && !is_spec(format[i + 1]))))
-{ i++;
-continue; }
+if (format[i + 1] == '\0')
+continue;
 start = i + 1, end = start;
 while (format[end] && is_flag(format[end]))
 end++;
