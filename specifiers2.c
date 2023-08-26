@@ -47,7 +47,7 @@ write(1, buffer, len);
 count += len;
 
 free(buffer);
-return (count);
+return (count - 1);
 }
 
 /**
