@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdint-gcc.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 #define FLAG_PLUS  1
 #define FLAG_SPACE 2

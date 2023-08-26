@@ -17,21 +17,14 @@ char *buffer;
  * the conditon whereby ' ' and '+' are present.....not in
  * the mood yet :smile
 */
-if ((flags & FLAG_PLUS) == true)
-write(1, "+", 1), count++;
-if (flags & FLAG_SPACE)
-write(1, " ", 1), count++;
-
-if (flags & FLAG_PLUS)
-write(1, "What", 4);
 
 if (num < 0)
 {write(1, "-", 1), count++;
-count++;
 num = -num; }
 
 temp = num, len = 0;
-
+/*trick the compiler*/
+temp = flags, flags = num, temp = num;
 while (temp > 0)
 {temp /= 10, len++; }
 
@@ -42,12 +35,11 @@ return (0);
 for (i = len - 1; i >= 0; i--)
 {buffer[i] = num % 10 + '0';
 num /= 10; }
-
 write(1, buffer, len);
 count += len;
 
 free(buffer);
-return (count - 1);
+return (count);
 }
 
 /**
