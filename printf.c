@@ -30,6 +30,9 @@ spot_ptr = spot(format[i + 1]);
 if (spot_ptr != NULL)
 count += spot_ptr(args, flags), i++;
 else
-{write(1, &format[i], 1), count++; }}}
+{write(1, &format[i], 1), count++; }}
+else
+write(1, &format[i], 1), count++;
+}
 va_end(args);
 return (count); }

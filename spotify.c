@@ -30,5 +30,5 @@ for (i = 0; conversion[i].format != '\0'; i++)
 if (conversion[i].format == c)
 return (conversion[i].func); }
 
-return (NULL);
+return (0);
 }
