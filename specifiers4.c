@@ -36,7 +36,7 @@ flags++;
 for (i = flags - 1; i >= 0; i--)
 write(1, &str[i], 1);
 
-return (flags + 1);
+return (flags);
 }
 
 /**
@@ -76,10 +76,8 @@ if (s[i] == input[j])
 s[i] = output[j];
 break; }}}
 
-printf("What");
-
 
 write(1, s, i);
 free(s);
-return (len - 1);
+return (len);
 }

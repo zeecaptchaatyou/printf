@@ -13,7 +13,6 @@
 #define FLAG_MINUS 8
 #define FLAG_ZERO 16
 
-
 /**
  * struct specs - structure of the whole printf
  * @format: variadic arguement

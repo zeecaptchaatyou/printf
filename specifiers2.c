@@ -9,7 +9,8 @@
  */
 int print_int(va_list args, int flags)
 {
-int num = va_arg(args, int), count = 0, temp, len, i;
+long int num = va_arg(args, long int);
+int count = 0, temp, len, i;
 char *buffer;
 
 /*
@@ -25,6 +26,10 @@ num = -num; }
 temp = num, len = 0;
 /*trick the compiler*/
 temp = flags, flags = num, temp = num;
+
+if (num == 0)
+write(1, "0", 1), count++;
+
 while (temp > 0)
 {temp /= 10, len++; }
 
