@@ -30,3 +30,15 @@ src++, ptr++;
 *ptr = '\0';
 return (dest);
 }
+
+/**
+ * is_spec - checks if the currect character is a specifier
+ * @c: a character in the format string
+ * Return: 0 or non-zero value
+*/
+int is_spec(char c)
+{
+return (c == 'b' || c == 'c' || c == 'd' || c == 'i'
+|| c == 'o' || c == 'p' || c == 'r' || c == 'R' || c == 's'
+|| c == 'S' || c == 'u' || c == 'x' || c == 'X');
+}

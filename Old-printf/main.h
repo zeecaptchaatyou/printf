@@ -13,6 +13,8 @@
 #include <stddef.h>
 #define BUFF_SIZE 1024
 
+
+
 /*function pointers function declaration*/
 size_t (*i_spotify(char c))(ssize_t n, size_t count);
 size_t (*str_spotify(char c))(char *s, size_t count);

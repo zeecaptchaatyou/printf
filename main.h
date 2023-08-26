@@ -26,6 +26,9 @@ char format;
 int (*func)(va_list, int flags);
 } conversion_t;
 
+extern conversion_t conversion[];
+
+int (*spot(char c))(va_list args, int flags);
 int _printf(const char *format, ...);
 int print_char(va_list args, int flags);
 int print_string(va_list args, int flags);
@@ -48,4 +51,5 @@ int is_flag(char c);
 
 char *_strcpy(char *dest, const char *src);
 int _strlen(char *s);
+int is_spec(char c);
 #endif
